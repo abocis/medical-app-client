@@ -1,7 +1,9 @@
 name: Exemple workflow
 
-  on: [push, pull_request]
-
+ on:
+  push:
+    branches:
+      - main
 
 jobs: 
   build:
