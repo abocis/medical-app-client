@@ -4,8 +4,8 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
 
   body {
-    margin: 0;
-    padding: 0;
+    margin: 1;
+    padding: 1;
     box-sizing: border-box;
     font-family: "Roboto", sans-serif;
     width: 100vw;
