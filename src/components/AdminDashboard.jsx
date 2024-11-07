@@ -36,7 +36,7 @@ function AdminDashboard() {
       <LogoContainer src={Logo} />
       <Title>Admin Dashboard</Title>
       <Text>Welcome, {user}!</Text>
-      <Text>Times {}</Text>
+      <Text>Times {BookedTimes}</Text>
       <Logout />
     </AdminContainer>
   );

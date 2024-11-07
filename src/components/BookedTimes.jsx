@@ -11,7 +11,7 @@ const BookedTimes = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8080/appointments/caregiver/672b6d5180c0fd484157b920"
+        "http://localhost:8080/appointments/caregiver/{caregiverId}"
       ); // Replace with your backend API endpoint
       setData(response.data);
       setLoading(false);
