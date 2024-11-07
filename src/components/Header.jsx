@@ -47,8 +47,7 @@ const Header = () => (
       <span>Health Care</span>
     </LogoContainer>
     <NavLinks>
-      <NavLink to="/about">About</NavLink>
-      <NavLink to="/oss">OSS</NavLink>
+      <NavLink to="/about">About us</NavLink>
       <NavLink to="/contact">Contact</NavLink>
       <NavLink to="/login">Login</NavLink>
       <NavLink to="/register">Register</NavLink>

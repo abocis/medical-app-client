@@ -6,21 +6,26 @@ import {
 } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Login from "./components/Login";
+import Register from "./components/Register";
 import UserDashboard from "./components/UserDashboard";
 import AdminDashboard from "./components/AdminDashboard";
 import Unauthorized from "./components/Unauthorized";
 import Home from "./components/Home";
 import RequireAuth from "./components/RequireAuth";
 import GlobalStyle from "./styles/GlobalStyle";
+import Header from "./components/Header"; // Import Header
 
 function App() {
   return (
     <AuthProvider>
       <GlobalStyle />
-      <div className="content">
-        <Router>
+      <Router>
+        <Header /> {/* Place Header within Router */}
+        <div className="content">
           <Routes>
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route
               path="/user/dashboard"
@@ -38,11 +43,10 @@ function App() {
                 </RequireAuth>
               }
             />
-            <Route path="/" element={<Home />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-        </Router>
-      </div>
+        </div>
+      </Router>
     </AuthProvider>
   );
 }
