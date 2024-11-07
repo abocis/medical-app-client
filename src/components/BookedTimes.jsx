@@ -1,50 +1,47 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import "./style.css";
 
-const BookedTimes = () => {
-  // State to hold fetched data
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export default function BookedTimes() {
+  const [appointments, setAppointments] = useState([]);
 
-  // Function to fetch data from backend
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/appointments/caregiver/{caregiverId}"
-      ); // Replace with your backend API endpoint
-      setData(response.data);
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
-
-  // useEffect to run fetchData on component mount
+  // useEffect to fetch all appointments from the backend
   useEffect(() => {
-    fetchData();
-  }, []); // Empty dependency array means this will run once on mount
+    const fetchAppointments = async () => {
+      const url = `${
+        import.meta.env.VITE_API_URL
+      }/appointments/caregiver${caregiverId}`;
+      console.log("Fetching URL: ", url);
+      try {
+        const response = await fetch(url, {
+          method: "GET",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log("DATA: ", data);
+          setAppointments(data);
+        } else {
+          console.error("Error fetching data: ", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
 
-  // Render based on loading/error state
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+    fetchAppointments();
+  }, []);
 
   return (
-    <div className="admin-dashboard">
-      <h1>Admin Dashboard</h1>
-      <div className="data-container">
-        {/* Display fetched data */}
-        {data.map((item) => (
-          <div key={item.id} className="data-item">
-            <h2>{item.name}</h2>
-            <p>{item.description}</p>
-            {/* Add more fields as needed */}
+    <div>
+      <h2>All Booked Times</h2>
+      <div>
+        {appointments.map((appointment, index) => (
+          <div key={index}>
+            <p>{appointments}</p>
+            <p>{appointment.dateTime}</p>
+            <p>{appointment.Status}</p>
           </div>
         ))}
       </div>
     </div>
   );
-};
-
-export default BookedTimes;
+}
