@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/booking.css";
+import "../styles/Booking.css";
 
 const BookingPage = () => {
   const [availabilities, setAvailabilities] = useState([]);
@@ -13,13 +13,14 @@ const BookingPage = () => {
     // Hämta tider från backend
     const fetchAvailabilities = async () => {
       try {
-        const { data } = await axios.get(
+        const response = await axios.get(
           "http://localhost:8080/availability/all",
           {
             withCredentials: true,
           }
         );
-        setAvailabilities(data);
+        console.log("DATA: " + JSON.stringify(response.data));
+        setAvailabilities(response.data);
       } catch (err) {
         console.error("failed to fetch under data", err);
       } finally {
@@ -29,6 +30,9 @@ const BookingPage = () => {
 
     fetchAvailabilities();
   }, []);
+
+  // ur availabilities måste ni plocka ut availabilities.availableSlots och lägga i en ny array
+  // och den arrayen ska ni sedan mappa ut i return där ni nu mappar ut availabilities
 
   const handleAvailabilityClick = (availability) => {
     setSelectedAvailability(availability);
@@ -62,7 +66,7 @@ const BookingPage = () => {
             className="availability-item"
             onClick={() => handleAvailabilityClick(availability)}
           >
-            <p>{availability.time}</p>
+            <p>{availability.availableSlots}</p>
           </div>
         ))}
       </div>
