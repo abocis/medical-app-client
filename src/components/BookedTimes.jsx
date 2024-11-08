@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import "./style.css";
+import styles "../styles/GlobalStyle.css";
 
-export default function BookedTimes() {
+export default function BookedTimes({ caregiverId }) {
   const [appointments, setAppointments] = useState([]);
 
   // useEffect to fetch all appointments from the backend
@@ -11,6 +11,7 @@ export default function BookedTimes() {
         import.meta.env.VITE_API_URL
       }/appointments/caregiver${caregiverId}`;
       console.log("Fetching URL: ", url);
+
       try {
         const response = await fetch(url, {
           method: "GET",
@@ -27,8 +28,10 @@ export default function BookedTimes() {
       }
     };
 
-    fetchAppointments();
-  }, []);
+    if (caregiverId) {
+      fetchAppointments();
+    }
+  }, [caregiverId]); // Add caregiverId to dependencies if it changes
 
   return (
     <div>
@@ -36,9 +39,8 @@ export default function BookedTimes() {
       <div>
         {appointments.map((appointment, index) => (
           <div key={index}>
-            <p>{appointments}</p>
-            <p>{appointment.dateTime}</p>
-            <p>{appointment.Status}</p>
+            <p>Date and Time: {appointment.dateTime}</p>
+            <p>Status: {appointment.Status}</p>
           </div>
         ))}
       </div>
