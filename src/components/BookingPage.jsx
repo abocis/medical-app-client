@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/booking.css";
+import "../styles/Booking.css";
 
 const BookingPage = () => {
   const [availabilities, setAvailabilities] = useState([]); // Håller koll på tillgängliga tider
