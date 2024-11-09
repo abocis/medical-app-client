@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styles "../styles/GlobalStyle.css";
 
 export default function BookedTimes({ caregiverId }) {
   const [appointments, setAppointments] = useState([]);

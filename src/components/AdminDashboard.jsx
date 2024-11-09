@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import Logo from "../assets/health_care_logo.svg";
 import styled from "styled-components";
@@ -26,10 +26,45 @@ const Text = styled.p`
 `;
 
 function AdminDashboard() {
+  const [appointments, setAppointments] = useState([]);
   const {
     authState: { user },
   } = useAuth();
   const [users, setUsers] = useState([]);
+  // glöm ej plocka in returnen från din BookedTimes.jsx
+  // 1. använd axios inte fetch'
+  // 2. lägg withCredentials
+  // 3. hårdkoda caregiverId först
+  // 4. lägg till det jag la till i er main med userId så ska du nog kunna få user id av user
+  // 5. döp om till availabilities inte appointments
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      const url = `${
+        import.meta.env.VITE_API_URL
+      }/appointments/caregiver${caregiverId}`;
+      console.log("Fetching URL: ", url);
+
+      try {
+        const response = await fetch(url, {
+          method: "GET",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log("DATA: ", data);
+          setAppointments(data);
+        } else {
+          console.error("Error fetching data: ", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+
+    if (caregiverId) {
+      fetchAppointments();
+    }
+  }, []); // Add caregiverId to dependencies if it changes
 
   return (
     <AdminContainer>
