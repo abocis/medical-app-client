@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Logout from "./Logout";
 
 const AdminContainer = styled.div`
@@ -44,9 +44,10 @@ const ModalOverlay = styled.div`
 
 const ModalContainer = styled.div`
   background: white;
-  padding: 20px;
+  padding: 30px;
   border-radius: 10px;
-  width: 400px;
+  width: 600px;
+  height: 600px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 `;
 
@@ -75,6 +76,24 @@ const SlotItem = styled.li`
   font-size: 16px;
 `;
 
+// Toast Notification Animation
+const fadeInOut = keyframes`
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 1; }
+`;
+
+const Toast = styled.div`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4caf50;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  animation: ${fadeInOut} 3s ease forwards;
+`;
+
 function AdminDashboard() {
   const {
     authState: { user, userId },
@@ -83,18 +102,26 @@ function AdminDashboard() {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [availableSlots, setAvailableSlots] = useState([]);
-  const [message, setMessage] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
 
-  // Open and close modal
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  
+  const openModal = () => {
+    setIsModalOpen(true);
+    setToastMessage(""); 
+  };
+  
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setDate(""); 
+    setTime(""); 
+    setAvailableSlots([]); 
+  };
 
   // Add a time slot
   const handleAddSlot = () => {
     if (date && time) {
       const dateTime = `${date}T${time}:00`;
       setAvailableSlots((prevSlots) => [...prevSlots, dateTime]);
-      setTime("");
     }
   };
 
@@ -107,17 +134,19 @@ function AdminDashboard() {
     };
 
     try {
-      await axios.post("http://localhost:8080/availability", availabilityData,{
-
+      await axios.post("http://localhost:8080/availability", availabilityData, {
         withCredentials: true,
-        
       });
-      setMessage("Availability added successfully!");
-      setAvailableSlots([]); 
+      setToastMessage("Availability added successfully!");
+      setTimeout(() => setToastMessage(""), 3000);
+      setDate("");
+      setTime("");
+      setAvailableSlots([]);
       closeModal();
     } catch (error) {
       console.error("Error adding availability:", error);
-      setMessage("Failed to add availability.");
+      setToastMessage("Failed to add availability.");
+      setTimeout(() => setToastMessage(""), 3000); 
     }
   };
 
@@ -141,6 +170,7 @@ function AdminDashboard() {
                 required
               />
               <br />
+              <br/>
               <label>Time:</label>
               <input
                 type="time"
@@ -149,8 +179,9 @@ function AdminDashboard() {
                 required
               />
               <br />
+              <br />
               <FormButton type="button" onClick={handleAddSlot}>
-                Add Slot
+                Add Time
               </FormButton>
 
               <h4>Available Slots:</h4>
@@ -165,10 +196,12 @@ function AdminDashboard() {
                 Cancel
               </FormButton>
             </form>
-            {message && <p>{message}</p>}
           </ModalContainer>
         </ModalOverlay>
       )}
+
+      {/* Display Toast Notification */}
+      {toastMessage && <Toast>{toastMessage}</Toast>}
     </AdminContainer>
   );
 }
