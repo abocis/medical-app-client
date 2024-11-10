@@ -60,7 +60,6 @@ const FormButton = styled.button`
   border-radius: 5px;
   margin-top: 10px;
   font-weight: bold;
-
   &:hover {
     background-color: #2fadaa;
   }
@@ -104,7 +103,6 @@ function AdminDashboard() {
   const [availableSlots, setAvailableSlots] = useState([]);
   const [toastMessage, setToastMessage] = useState("");
 
-  
   const openModal = () => {
     setIsModalOpen(true);
     setToastMessage(""); 
