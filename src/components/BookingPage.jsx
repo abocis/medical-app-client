@@ -3,12 +3,12 @@ import axios from "axios";
 import "../styles/Booking.css";
 
 const BookingPage = () => {
-  const [availabilities, setAvailabilities] = useState([]); // Håller koll på tillgängliga tider
-  const [loading, setLoading] = useState(true); // Håller koll på om vi hämtar data
-  const [error, setError] = useState(null); // För att hantera fel
-  const [selectedAvailability, setSelectedAvailability] = useState(null); // För den valda tillgängliga tiden
-  const [showConfirmation, setShowConfirmation] = useState(false); // För att visa bokningsbekräftelse
-  const [newTime, setNewTime] = useState(""); // För att hantera nya tider som användaren vill lägga till
+  const [availabilities, setAvailabilities] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedAvailability, setSelectedAvailability] = useState(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [newTime, setNewTime] = useState("");
 
   // Hämtar tillgängliga tider från backend
   useEffect(() => {
@@ -21,7 +21,7 @@ const BookingPage = () => {
           }
         );
 
-        console.log("Fetched response from backend:", response); // Loggar hela responsen
+        console.log("Fetched response from backend:", response);
 
         // Extrahera tillgängliga tider från servern
         const availableSlots = response.data.flatMap((availability) => {
@@ -31,37 +31,33 @@ const BookingPage = () => {
           }));
         });
 
-        console.log("Filtered availabilities:", availableSlots); // Loggar de filtrerade tillgängliga tiderna
-        setAvailabilities(availableSlots); // Uppdatera state med tillgängliga tider
+        console.log("Filtered availabilities:", availableSlots);
+        setAvailabilities(availableSlots);
       } catch (err) {
         console.error("Error fetching data", err);
         setError("Error fetching available times.");
       } finally {
-        setLoading(false); // Avsluta laddning
+        setLoading(false);
       }
     };
 
     fetchAvailabilities();
-  }, []); // Körs endast en gång vid första renderingen
+  }, []);
 
-  // Hantera när användaren klickar på en tillgänglig tid
   const handleAvailabilityClick = (availability) => {
     setSelectedAvailability(availability);
     setShowConfirmation(true);
   };
 
-  // Bekräfta bokning
   const handleConfirmBooking = () => {
     alert(`You booked: ${selectedAvailability.time}`);
     setShowConfirmation(false);
   };
 
-  // Avbryt bokning
   const handleCancelBooking = () => {
     setShowConfirmation(false);
   };
 
-  // Lägg till en ny tillgänglig tid i backend
   const addNewTimeSlot = async () => {
     if (!newTime) {
       alert("Please enter a valid time.");
@@ -71,8 +67,8 @@ const BookingPage = () => {
     const newSlot = new Date(newTime);
 
     const availabilityDTO = {
-      caregiverId: "caregiver-id-here", // Här ska du ange vårdgivarens ID (ändra detta efter behov)
-      availableSlots: [newSlot], // Skickar den nya tiden
+      caregiverId: "caregiver-id-here",
+      availableSlots: [newSlot],
     };
 
     try {
@@ -82,24 +78,21 @@ const BookingPage = () => {
       );
       console.log("Added new availability:", response);
 
-      // Uppdatera tillgängligheterna i UI:t
       setAvailabilities((prev) => [
         ...prev,
         { id: response.data.id, time: response.data.availableSlots[0] },
       ]);
-      setNewTime(""); // Rensa inputfältet
+      setNewTime("");
     } catch (error) {
       console.error("Error adding new time slot:", error);
       alert("Error adding new time slot.");
     }
   };
 
-  // Om data är under hämtning, visa en laddningsindikator
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // Om det finns ett fel vid hämtning, visa felmeddelande
   if (error) {
     return <div>{error}</div>;
   }
@@ -115,25 +108,15 @@ const BookingPage = () => {
         ) : (
           availabilities.map((availability) => (
             <div
-              key={availability.id} // Nyckel används för effektiv rendering
+              key={availability.id}
               className="availability-item"
-              onClick={() => handleAvailabilityClick(availability)} // Hantera klick
+              onClick={() => handleAvailabilityClick(availability)}
             >
               <p>{new Date(availability.time).toLocaleString()}</p>{" "}
               {/* Visa formaterad tid */}
             </div>
           ))
         )}
-      </div>
-
-      {/* Lägg till ny tillgänglig tid */}
-      <div className="add-time-slot">
-        <input
-          type="datetime-local"
-          value={newTime}
-          onChange={(e) => setNewTime(e.target.value)} // Hantera förändring i inputfältet
-        />
-        <button onClick={addNewTimeSlot}>Add New Time Slot</button>
       </div>
 
       {/* Bokningsbekräftelse-popup */}
