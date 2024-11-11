@@ -3,14 +3,14 @@ import Logo from "../assets/health_care_logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
-
 const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   padding: 20px 30px;
   background-color: #333;
-  border-radius: 9px;
+  border-radius: 12px;
   color: #fff;
 `;
 
@@ -18,7 +18,7 @@ const LogoContainer = styled(Link)`
   display: flex;
   align-items: center;
   text-decoration: none;
-  color:#2fadaa;
+  color: #2fadaa;
   transition: color 0.3s ease;
   &:hover {
     color: #fff;
@@ -60,7 +60,7 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <LogoContainer to= "/">
+      <LogoContainer to="/">
         <LogoImage src={Logo} alt="Health Care Logo" />
         <span>Health Care</span>
       </LogoContainer>
@@ -69,7 +69,16 @@ const Header = () => {
         <NavLink to="/contact">Contact</NavLink>
         <NavLink to="/login">Login</NavLink>
         {authState?.isAuthenticated ? (
-          <button onClick={handleLogout} style={{ background: "none", border: "none", color: "#fff", cursor: "pointer", fontSize: "18px" }}>
+          <button
+            onClick={handleLogout}
+            style={{
+              background: "none",
+              border: "none",
+              color: "#fff",
+              cursor: "pointer",
+              fontSize: "18px",
+            }}
+          >
             Logout
           </button>
         ) : (
