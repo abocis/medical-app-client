@@ -88,10 +88,10 @@ function Register() {
 
       console.log("REGISTER RESPONSE: " + JSON.stringify(response.data));
 
-      window.console.log("resgiater succesfull, pls log in .");
+      window.console.log("resgiater succesfull .");
 
       // Redirect to login page or a success page
-      navigate("/login", { replace: true });
+      navigate("/user", { replace: true });
     } catch (error) {
       setError("Registration failed.");
     }
