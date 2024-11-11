@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import axios from "axios";
 import Logo from "../assets/health_care_logo.svg";
 import styled from "styled-components";
 import Logout from "./Logout";
-import BookedTimes from "./BookedTimes";
 
-// admin page, can only visit if you have role ADMIN
 const AdminContainer = styled.div`
   display: flex;
   align-items: center;
@@ -26,11 +25,14 @@ const Text = styled.p`
 `;
 
 function AdminDashboard() {
-  const [appointments, setAppointments] = useState([]);
+  const [availabilities, setAvailabilities] = useState([]);
   const {
     authState: { user },
   } = useAuth();
-  const [users, setUsers] = useState([]);
+
+  // Hårdkodat id
+  const caregiverId = "67277bf847a7116efddefde0";
+
   // glöm ej plocka in returnen från din BookedTimes.jsx
   // 1. använd axios inte fetch'
   // 2. lägg withCredentials
@@ -39,20 +41,20 @@ function AdminDashboard() {
   // 5. döp om till availabilities inte appointments
 
   useEffect(() => {
-    const fetchAppointments = async () => {
+    const fetchAvailabilities = async () => {
       const url = `${
         import.meta.env.VITE_API_URL
       }/appointments/caregiver${caregiverId}`;
       console.log("Fetching URL: ", url);
 
       try {
-        const response = await fetch(url, {
-          method: "GET",
+        const response = await axios.get(url, {
+          withCredentials: true,
         });
-        if (response.ok) {
-          const data = await response.json();
+        if (response.status === 200) {
+          const data = response.data;
           console.log("DATA: ", data);
-          setAppointments(data);
+          setAvailabilities(data);
         } else {
           console.error("Error fetching data: ", response.statusText);
         }
@@ -62,16 +64,29 @@ function AdminDashboard() {
     };
 
     if (caregiverId) {
-      fetchAppointments();
+      fetchAvailabilities();
     }
-  }, []); // Add caregiverId to dependencies if it changes
+  }, [caregiverId]);
 
   return (
     <AdminContainer>
-      <LogoContainer src={Logo} />
+      <LogoContainer src={Logo} alt="Health Care Logo" />
       <Title>Admin Dashboard</Title>
-      <Text>Welcome, {user}!</Text>
-      <Logout />
+      <Text>Welcome, {user?.name || "Admin"}!</Text> <Logout />
+      <h2>All Booked Times</h2>
+      <div>
+        {availabilities.length > 0 ? (
+          availabilities.map((availability, index) => (
+            <div key={index}>
+              <p>Date and Time: {availability.dateTime}</p>
+              <p>Status: {availability.status}</p>
+              <p>Patient {availability.patientId}</p>
+            </div>
+          ))
+        ) : (
+          <p>No availabilities booked yet.</p>
+        )}
+      </div>
     </AdminContainer>
   );
 }
