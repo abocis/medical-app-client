@@ -44,7 +44,7 @@ function AdminDashboard() {
     const fetchAvailabilities = async () => {
       const url = `${
         import.meta.env.VITE_API_URL
-      }/appointments/caregiver${caregiverId}`;
+      }/appointments/caregiver/${caregiverId}`;
       console.log("Fetching URL: ", url);
 
       try {
@@ -53,7 +53,7 @@ function AdminDashboard() {
         });
         if (response.status === 200) {
           const data = response.data;
-          console.log("DATA: ", data);
+          console.log("DATA: ", JSON.stringify(data));
           setAvailabilities(data);
         } else {
           console.error("Error fetching data: ", response.statusText);
@@ -66,7 +66,7 @@ function AdminDashboard() {
     if (caregiverId) {
       fetchAvailabilities();
     }
-  }, [caregiverId]);
+  }, []);
 
   return (
     <AdminContainer>
