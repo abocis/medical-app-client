@@ -4,6 +4,7 @@ import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 import styled, { keyframes } from "styled-components";
 import Logout from "./Logout";
+import GetBookings from "./GetBookings";
 
 const AdminContainer = styled.div`
   display: flex;
@@ -170,6 +171,10 @@ function AdminDashboard() {
     navigate("/booking");
   };
 
+  const handleToGetTimes = () => {
+    navigate("/GetBookings");
+  };
+
   return (
     <AdminContainer>
       <Title>Admin Dashboard</Title>
@@ -179,7 +184,9 @@ function AdminDashboard() {
       <BookingButton onClick={handleGoToBooking}>
         Go to Availabilities
       </BookingButton>{" "}
-      {/* New Button */}
+      <AppointmentsButton onClick={handleToGetTimes}>
+        See booked times for you
+      </AppointmentsButton>{" "}
       {isModalOpen && (
         <ModalOverlay>
           <ModalContainer>

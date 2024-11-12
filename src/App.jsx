@@ -50,6 +50,14 @@ function App() {
             />
             <Route path="/" element={<Home />} />
             <Route path="*" element={<Navigate to="/" replace />} />
+            <Route
+              path="/GetBookings"
+              element={
+                <RequireAuth allowedRoles={["ADMIN"]}>
+                  <BookingPage />
+                </RequireAuth>
+              }
+            />
           </Routes>
         </Router>
       </div>
