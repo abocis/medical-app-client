@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../hooks/useAuth";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import axios from "axios";
-import Logo from "../assets/health_care_logo.svg";
-import styled from "styled-components";
+import { useAuth } from "../hooks/useAuth";
+import styled, { keyframes } from "styled-components";
 import Logout from "./Logout";
 
 const AdminContainer = styled.div`
@@ -12,81 +12,221 @@ const AdminContainer = styled.div`
   flex-direction: column;
 `;
 
-const LogoContainer = styled.img`
-  height: 20rem;
-`;
-
 const Title = styled.h2`
   font-size: 22px;
 `;
 
-const Text = styled.p`
-  font-size: 18px;
+const AddButton = styled.button`
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #057d7a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-weight: bold;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: #2fadaa;
+  }
+`;
+
+const BookingButton = styled.button`
+  // Styled component for Booking button
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #8a2be2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #9370db;
+  }
+`;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalContainer = styled.div`
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 600px;
+  height: 600px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+`;
+
+const FormButton = styled.button`
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #057d7a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+  &:hover {
+    background-color: #2fadaa;
+  }
+`;
+
+const SlotList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
+const SlotItem = styled.li`
+  margin-bottom: 5px;
+  font-size: 16px;
+`;
+
+// Toast Notification Animation
+const fadeInOut = keyframes`
+  0%, 100% { opacity: 0; }
+  10%, 90% { opacity: 1; }
+`;
+
+const Toast = styled.div`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4caf50;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  animation: ${fadeInOut} 3s ease forwards;
 `;
 
 function AdminDashboard() {
-  const [availabilities, setAvailabilities] = useState([]);
+  const navigate = useNavigate();
   const {
-    authState: { user },
+    authState: { user, userId },
   } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [availableSlots, setAvailableSlots] = useState([]);
+  const [toastMessage, setToastMessage] = useState("");
 
-  // Hårdkodat id
-  const caregiverId = "67277bf847a7116efddefde0";
+  const openModal = () => {
+    setIsModalOpen(true);
+    setToastMessage("");
+  };
 
-  // glöm ej plocka in returnen från din BookedTimes.jsx
-  // 1. använd axios inte fetch'
-  // 2. lägg withCredentials
-  // 3. hårdkoda caregiverId först
-  // 4. lägg till det jag la till i er main med userId så ska du nog kunna få user id av user
-  // 5. döp om till availabilities inte appointments
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setDate("");
+    setTime("");
+    setAvailableSlots([]);
+  };
 
-  useEffect(() => {
-    const fetchAvailabilities = async () => {
-      const url = `${
-        import.meta.env.VITE_API_URL
-      }/appointments/caregiver/${caregiverId}`;
-      console.log("Fetching URL: ", url);
+  const handleAddSlot = () => {
+    if (date && time) {
+      const dateTime = `${date}T${time}:00`;
+      setAvailableSlots((prevSlots) => [...prevSlots, dateTime]);
+    }
+  };
 
-      try {
-        const response = await axios.get(url, {
-          withCredentials: true,
-        });
-        if (response.status === 200) {
-          const data = response.data;
-          console.log("DATA: ", JSON.stringify(data));
-          setAvailabilities(data);
-        } else {
-          console.error("Error fetching data: ", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const availabilityData = {
+      caregiverId: userId,
+      availableSlots,
     };
 
-    if (caregiverId) {
-      fetchAvailabilities();
+    try {
+      await axios.post("http://localhost:8080/availability", availabilityData, {
+        withCredentials: true,
+      });
+      setToastMessage("Availability added successfully!");
+      setTimeout(() => setToastMessage(""), 3000);
+      setDate("");
+      setTime("");
+      setAvailableSlots([]);
+      closeModal();
+    } catch (error) {
+      console.error("Error adding availability:", error);
+      setToastMessage("Failed to add availability.");
+      setTimeout(() => setToastMessage(""), 3000);
     }
-  }, []);
+  };
+
+  const handleGoToBooking = () => {
+    // Define navigation handler
+    navigate("/booking");
+  };
 
   return (
     <AdminContainer>
-      <LogoContainer src={Logo} alt="Health Care Logo" />
       <Title>Admin Dashboard</Title>
-      <Text>Welcome, {user?.name || "Admin"}!</Text> <Logout />
-      <h2>All Booked Times</h2>
-      <div>
-        {availabilities.length > 0 ? (
-          availabilities.map((availability, index) => (
-            <div key={index}>
-              <p>Date and Time: {availability.dateTime}</p>
-              <p>Status: {availability.status}</p>
-              <p>Patient {availability.patientId}</p>
-            </div>
-          ))
-        ) : (
-          <p>No availabilities booked yet.</p>
-        )}
-      </div>
+      <p>Welcome, {user}!</p>
+      <Logout />
+      <AddButton onClick={openModal}>Add Availability</AddButton>
+      <BookingButton onClick={handleGoToBooking}>
+        Go to Availabilities
+      </BookingButton>{" "}
+      {/* New Button */}
+      {isModalOpen && (
+        <ModalOverlay>
+          <ModalContainer>
+            <h3>Set Availability</h3>
+            <form onSubmit={handleSubmit}>
+              <label>Date:</label>
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
+              <br />
+              <br />
+              <label>Time:</label>
+              <input
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                required
+              />
+              <br />
+              <br />
+              <FormButton type="button" onClick={handleAddSlot}>
+                Add Time
+              </FormButton>
+
+              <h4>Available Slots:</h4>
+              <SlotList>
+                {availableSlots.map((slot, index) => (
+                  <SlotItem key={index}>{slot}</SlotItem>
+                ))}
+              </SlotList>
+
+              <FormButton type="submit">Submit Availability</FormButton>
+              <FormButton
+                type="button"
+                onClick={closeModal}
+                style={{ marginLeft: "10px" }}
+              >
+                Cancel
+              </FormButton>
+            </form>
+          </ModalContainer>
+        </ModalOverlay>
+      )}
+      {toastMessage && <Toast>{toastMessage}</Toast>}
     </AdminContainer>
   );
 }

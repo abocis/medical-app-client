@@ -12,6 +12,8 @@ import Unauthorized from "./components/Unauthorized";
 import Home from "./components/Home";
 import RequireAuth from "./components/RequireAuth";
 import GlobalStyle from "./styles/GlobalStyle";
+import BookingPage from "./components/BookingPage";
+import "./styles/booking.css";
 
 function App() {
   return (
@@ -35,6 +37,14 @@ function App() {
               element={
                 <RequireAuth allowedRoles={["ADMIN"]}>
                   <AdminDashboard />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/booking"
+              element={
+                <RequireAuth allowedRoles={["USER", "ADMIN"]}>
+                  <BookingPage />
                 </RequireAuth>
               }
             />

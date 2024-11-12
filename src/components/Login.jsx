@@ -86,12 +86,17 @@ function Login() {
         }
       );
 
-      const { username, roles } = response.data;
+      // HELENA: la till userId här
+      const { username, roles, userId } = response.data;
 
+      console.log("LOGIN RESPONSE: " + JSON.stringify(response.data));
+
+      // och här
       setAuthState({
         isAuthenticated: true,
         user: username,
         roles: roles,
+        userId: userId,
         loading: false,
       });
 
