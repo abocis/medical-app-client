@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
+import style from "../styles/BookedTimes.css";
 
 function BookedTimes() {
   const [availabilities, setAvailabilities] = useState([]);
@@ -38,6 +39,8 @@ function BookedTimes() {
       fetchAvailabilities();
     }
   }, []);
+
+  const handleToGetTimes = (availability) => {};
 
   return (
     <AdminContainer>

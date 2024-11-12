@@ -33,6 +33,22 @@ const AddButton = styled.button`
   }
 `;
 
+const TimeButton = styled.button`
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #057d7a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-weight: bold;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: #2fadaa;
+  }
+`;
+
 const BookingButton = styled.button`
   // Styled component for Booking button
   cursor: pointer;
@@ -184,9 +200,7 @@ function AdminDashboard() {
       <BookingButton onClick={handleGoToBooking}>
         Go to Availabilities
       </BookingButton>{" "}
-      <AppointmentsButton onClick={handleToGetTimes}>
-        See booked times for you
-      </AppointmentsButton>{" "}
+      <TimeButton onClick={handleToGetTimes}> Your booked times </TimeButton>
       {isModalOpen && (
         <ModalOverlay>
           <ModalContainer>

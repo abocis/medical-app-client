@@ -14,6 +14,7 @@ import RequireAuth from "./components/RequireAuth";
 import GlobalStyle from "./styles/GlobalStyle";
 import BookingPage from "./components/BookingPage";
 import "./styles/booking.css";
+import "./styles/bookedtimes.css";
 
 function App() {
   return (
@@ -40,6 +41,16 @@ function App() {
                 </RequireAuth>
               }
             />
+
+            <Route
+              path="/GetBookings"
+              element={
+                <RequireAuth allowedRoles={["ADMIN"]}>
+                  <BookingPage />
+                </RequireAuth>
+              }
+            />
+
             <Route
               path="/booking"
               element={
@@ -50,14 +61,6 @@ function App() {
             />
             <Route path="/" element={<Home />} />
             <Route path="*" element={<Navigate to="/" replace />} />
-            <Route
-              path="/GetBookings"
-              element={
-                <RequireAuth allowedRoles={["ADMIN"]}>
-                  <BookingPage />
-                </RequireAuth>
-              }
-            />
           </Routes>
         </Router>
       </div>
