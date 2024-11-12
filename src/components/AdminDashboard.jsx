@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";  // Import useNavigate for navigation
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 import styled, { keyframes } from "styled-components";
@@ -24,9 +25,25 @@ const AddButton = styled.button`
   border-radius: 5px;
   margin-top: 20px;
   font-weight: bold;
+  margin-right: 10px;
 
   &:hover {
     background-color: #2fadaa;
+  }
+`;
+
+const BookingButton = styled.button`  // Styled component for Booking button
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #8a2be2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #9370db;
   }
 `;
 
@@ -94,6 +111,7 @@ const Toast = styled.div`
 `;
 
 function AdminDashboard() {
+  const navigate = useNavigate();  
   const {
     authState: { user, userId },
   } = useAuth();
@@ -105,24 +123,22 @@ function AdminDashboard() {
 
   const openModal = () => {
     setIsModalOpen(true);
-    setToastMessage(""); 
-  };
-  
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setDate(""); 
-    setTime(""); 
-    setAvailableSlots([]); 
+    setToastMessage("");
   };
 
-  // Add a time slot
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setDate("");
+    setTime("");
+    setAvailableSlots([]);
+  };
+
   const handleAddSlot = () => {
     if (date && time) {
       const dateTime = `${date}T${time}:00`;
       setAvailableSlots((prevSlots) => [...prevSlots, dateTime]);
     }
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -144,8 +160,12 @@ function AdminDashboard() {
     } catch (error) {
       console.error("Error adding availability:", error);
       setToastMessage("Failed to add availability.");
-      setTimeout(() => setToastMessage(""), 3000); 
+      setTimeout(() => setToastMessage(""), 3000);
     }
+  };
+
+  const handleGoToBooking = () => {  // Define navigation handler
+    navigate("/booking");
   };
 
   return (
@@ -154,6 +174,7 @@ function AdminDashboard() {
       <p>Welcome, {user}!</p>
       <Logout />
       <AddButton onClick={openModal}>Add Availability</AddButton>
+      <BookingButton onClick={handleGoToBooking}>Go to Availabilities</BookingButton> {/* New Button */}
 
       {isModalOpen && (
         <ModalOverlay>
@@ -168,7 +189,7 @@ function AdminDashboard() {
                 required
               />
               <br />
-              <br/>
+              <br />
               <label>Time:</label>
               <input
                 type="time"
@@ -198,7 +219,6 @@ function AdminDashboard() {
         </ModalOverlay>
       )}
 
-      {/* Display Toast Notification */}
       {toastMessage && <Toast>{toastMessage}</Toast>}
     </AdminContainer>
   );
