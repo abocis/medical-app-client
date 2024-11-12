@@ -54,10 +54,29 @@ const BookingPage = ({ initialPatientId, initialCaregiverId }) => {
     setSelectedAvailability(null);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setShowModal(false); // Stäng modalen
-    setShowConfirmation(true); // Visa bekräftelseruta
+
+    // Skapa bokningsdata
+    const appointmentData = {
+      patientId: patientId,
+      caregiverId: "67277bf847a7116efddefde0",
+      dateTime: selectedAvailability.time,
+      status: "SCHEDULED",
+    };
+
+    try {
+      // Skicka POST-förfrågan till backend för att boka tid
+      await axios.post("http://localhost:8080/appointments", appointmentData, {
+        withCredentials: true,
+      });
+
+      setShowModal(false);
+      setShowConfirmation(true);
+    } catch (error) {
+      console.error("Error booking appointment", error);
+      setError("An error occurred while booking your appointment.");
+    }
   };
 
   const handleCloseConfirmation = () => {
@@ -103,9 +122,9 @@ const BookingPage = ({ initialPatientId, initialCaregiverId }) => {
                 <label htmlFor="patientId">First Name</label>
                 <input
                   type="text"
-                  id="patientId"
-                  name="patientId"
-                  value={patientId}
+                  Name="patientId"
+                  First="patientId"
+                  value={""}
                   onChange={(e) => setPatientId(e.target.value)}
                 />
               </div>
@@ -114,9 +133,9 @@ const BookingPage = ({ initialPatientId, initialCaregiverId }) => {
                 <label htmlFor="caregiverId">Last Name</label>
                 <input
                   type="text"
-                  id="caregiverId"
+                  Last="caregiverId"
                   name="caregiverId"
-                  value={caregiverId}
+                  value={" "}
                   onChange={(e) => setCaregiverId(e.target.value)}
                 />
               </div>
