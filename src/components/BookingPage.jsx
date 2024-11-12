@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Booking.css";
 
-const BookingPage = () => {
+const BookingPage = ({ initialPatientId, initialCaregiverId }) => {
   const [availabilities, setAvailabilities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedAvailability, setSelectedAvailability] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [newTime, setNewTime] = useState("");
 
-  // Hämtar tillgängliga tider från backend
+  // State for form inputs
+  const [patientId, setPatientId] = useState(initialPatientId || "");
+  const [caregiverId, setCaregiverId] = useState(initialCaregiverId || "");
+  const [notes, setNotes] = useState("");
+
   useEffect(() => {
     const fetchAvailabilities = async () => {
       try {
@@ -21,9 +25,6 @@ const BookingPage = () => {
           }
         );
 
-        console.log("Fetched response from backend:", response);
-
-        // Extrahera tillgängliga tider från servern
         const availableSlots = response.data.flatMap((availability) => {
           return availability.availableSlots.map((slot) => ({
             id: availability.id,
@@ -31,7 +32,6 @@ const BookingPage = () => {
           }));
         });
 
-        console.log("Filtered availabilities:", availableSlots);
         setAvailabilities(availableSlots);
       } catch (err) {
         console.error("Error fetching data", err);
@@ -46,47 +46,22 @@ const BookingPage = () => {
 
   const handleAvailabilityClick = (availability) => {
     setSelectedAvailability(availability);
-    setShowConfirmation(true);
+    setShowModal(true);
   };
 
-  const handleConfirmBooking = () => {
-    alert(`You booked: ${selectedAvailability.time}`);
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedAvailability(null);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setShowModal(false); // Stäng modalen
+    setShowConfirmation(true); // Visa bekräftelseruta
+  };
+
+  const handleCloseConfirmation = () => {
     setShowConfirmation(false);
-  };
-
-  const handleCancelBooking = () => {
-    setShowConfirmation(false);
-  };
-
-  const addNewTimeSlot = async () => {
-    if (!newTime) {
-      alert("Please enter a valid time.");
-      return;
-    }
-
-    const newSlot = new Date(newTime);
-
-    const availabilityDTO = {
-      caregiverId: "caregiver-id-here",
-      availableSlots: [newSlot],
-    };
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/availability",
-        availabilityDTO
-      );
-      console.log("Added new availability:", response);
-
-      setAvailabilities((prev) => [
-        ...prev,
-        { id: response.data.id, time: response.data.availableSlots[0] },
-      ]);
-      setNewTime("");
-    } catch (error) {
-      console.error("Error adding new time slot:", error);
-      alert("Error adding new time slot.");
-    }
   };
 
   if (loading) {
@@ -100,42 +75,107 @@ const BookingPage = () => {
   return (
     <div className="booking-page">
       <h1>Available Time Slots</h1>
-
-      {/* Visa ett meddelande om inga tillgängliga tider finns */}
       <div className="availabilities-container">
         {availabilities.length === 0 ? (
           <p>No available time slots</p>
         ) : (
           availabilities.map((availability) => (
             <div
-              key={availability.id}
+              key={`${availability.id}-${new Date(
+                availability.time
+              ).toISOString()}`}
               className="availability-item"
               onClick={() => handleAvailabilityClick(availability)}
             >
-              <p>{new Date(availability.time).toLocaleString()}</p>{" "}
-              {/* Visa formaterad tid */}
+              <p>{new Date(availability.time).toLocaleString()}</p>
             </div>
           ))
         )}
       </div>
 
-      {/* Bokningsbekräftelse-popup */}
-      <div className={`book-confirmation ${showConfirmation ? "active" : ""}`}>
-        <div className="book-confirmation-dialog">
-          <h3>Confirm Booking</h3>
-          <p>
-            Are you sure you want to book the time:{" "}
-            <strong>
-              {new Date(selectedAvailability?.time).toLocaleString()}
-            </strong>
-            ?
-          </p>
-          <div>
-            <button onClick={handleConfirmBooking}>Confirm</button>
-            <button onClick={handleCancelBooking}>Cancel</button>
+      {/* Modal */}
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Complete Your Appointment</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="patientId">First Name</label>
+                <input
+                  type="text"
+                  id="patientId"
+                  name="patientId"
+                  value={patientId}
+                  onChange={(e) => setPatientId(e.target.value)}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="caregiverId">Last Name</label>
+                <input
+                  type="text"
+                  id="caregiverId"
+                  name="caregiverId"
+                  value={caregiverId}
+                  onChange={(e) => setCaregiverId(e.target.value)}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="appointmentTime">Selected Time</label>
+                <input
+                  type="text"
+                  id="appointmentTime"
+                  name="appointmentTime"
+                  value={new Date(selectedAvailability.time).toLocaleString()}
+                  readOnly
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="notes">Notes</label>
+                <textarea
+                  id="notes"
+                  name="notes"
+                  placeholder="Enter any additional notes..."
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                ></textarea>
+              </div>
+
+              <div className="modal-actions">
+                <button type="button" onClick={handleCloseModal}>
+                  Close
+                </button>
+                <button type="submit">Submit</button>
+              </div>
+            </form>
           </div>
         </div>
-      </div>
+      )}
+
+      {showConfirmation && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Booking Confirmed!</h2>
+            <p>
+              Your appointment has been scheduled for{" "}
+              <strong>
+                {new Date(selectedAvailability.time).toLocaleString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+              </strong>
+              .
+            </p>
+            <button onClick={handleCloseConfirmation}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
