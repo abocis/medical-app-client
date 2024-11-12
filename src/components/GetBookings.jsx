@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
-import style from "../styles/BookedTimes.css";
+import "../styles/Booking.css";
 
 function BookedTimes() {
   const [availabilities, setAvailabilities] = useState([]);
