@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Logo from "../assets/health_care_logo.svg";
 import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 // start page
 const HomeContainer = styled.div`
   display: flex;

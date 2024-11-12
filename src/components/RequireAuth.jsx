@@ -16,10 +16,13 @@ function RequireAuth({ children, allowedRoles }) {
           // using withCredentials is crutial for and request that needs to check authorization!
           // so remember to user this if needed
         });
+        // Helena: la till userId här så egentligen så går det att köra den här metoden på de pages
+        // där man behöver ha userId alltså köra request till /check
         setAuthState({
           isAuthenticated: true,
           user: response.data.username,
           roles: response.data.roles,
+          userId: response.data.userId,
         });
         setLoading(false);
       } catch (error) {
@@ -27,6 +30,7 @@ function RequireAuth({ children, allowedRoles }) {
           isAuthenticated: false,
           user: null,
           roles: [],
+          userId: "",
         });
         setLoading(false);
       }
