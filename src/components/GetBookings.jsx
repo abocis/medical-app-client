@@ -5,13 +5,14 @@ import axios from "axios";
 
 function BookedTimes() {
   const [availabilities, setAvailabilities] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const { authState } = useAuth();
 
   const caregiverId = authState.userId;
 
   //fetch data
-  const fetchAvailabilities = async () => {
+  const myBookedTime = async () => {
     if (!caregiverId) {
       console.error("No caregiver ID found.");
       return;
@@ -43,7 +44,7 @@ function BookedTimes() {
   return (
     <>
       <h2>Bookings</h2>
-      <button onClick={fetchAvailabilities} disabled={loading}>
+      <button onClick={myBookedTime} disabled={loading}>
         {loading ? "Loading..." : "Load Bookings"}
       </button>
       {availabilities.length > 0 ? (
