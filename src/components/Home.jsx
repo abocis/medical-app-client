@@ -161,7 +161,7 @@ const Home = () => (
         <TestimonialCard>
           <TestimonialText>
             "Booking an appointment was so easy and convenient. Health Care truly
-            respects my time and needs."
+            respects my time and needds."
           </TestimonialText>
           <TestimonialAuthor>- Alex J.</TestimonialAuthor>
         </TestimonialCard>
