@@ -1,6 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-// global styles that affects the whole app
-// you can add more if needed
+
 const GlobalStyle = createGlobalStyle`
 
   body {

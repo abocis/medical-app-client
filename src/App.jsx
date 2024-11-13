@@ -13,6 +13,10 @@ import Unauthorized from "./components/Unauthorized";
 import Home from "./components/Home";
 import RequireAuth from "./components/RequireAuth";
 import GlobalStyle from "./styles/GlobalStyle";
+import BookingPage from "./components/BookingPage";
+import "./styles/booking.css";
+import "./styles/bookedtimes.css";
+import GetBookings from "./components/GetBookings";
 import Header from "./components/Header"; // Import Header
 
 function App() {
@@ -43,6 +47,25 @@ function App() {
                 </RequireAuth>
               }
             />
+
+            <Route
+              path="/GetBookings"
+              element={
+                <RequireAuth allowedRoles={["ADMIN"]}>
+                  <GetBookings />
+                </RequireAuth>
+              }
+            />
+
+            <Route
+              path="/booking"
+              element={
+                <RequireAuth allowedRoles={["USER", "ADMIN"]}>
+                  <BookingPage />
+                </RequireAuth>
+              }
+            />
+            <Route path="/" element={<Home />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
