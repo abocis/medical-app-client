@@ -118,8 +118,9 @@ const Home = () => (
       <SectionTitle>About Us</SectionTitle>
       <SectionText>
         Welcome to Health Care, where we are committed to delivering the highest
-        standard of medical care for our patients. Our experienced team is dedicated
-        to providing compassionate and personalized care tailored to each individual's needs.
+        standard of medical care for our patients. Our experienced team is
+        dedicated to providing compassionate and personalized care tailored to
+        each individual's needs.
       </SectionText>
     </AboutSection>
 
@@ -127,9 +128,9 @@ const Home = () => (
     <ContactSection>
       <SectionTitle>Contact</SectionTitle>
       <SectionText>
-        Get in touch with us at any time for assistance with bookings or for general
-        inquiries. Reach out by phone at <strong>+123-456-7890</strong> or email us at{" "}
-        <strong>hello@healthcare.com</strong>.
+        Get in touch with us at any time for assistance with bookings or for
+        general inquiries. Reach out by phone at <strong>+123-456-7890</strong>{" "}
+        or email us at <strong>hello@healthcare.com</strong>.
       </SectionText>
     </ContactSection>
 
@@ -137,9 +138,9 @@ const Home = () => (
     <AppointmentSection>
       <SectionTitle>Appointment Booking</SectionTitle>
       <SectionText>
-        Book appointments seamlessly through our online system, with no need to wait
-        in phone queues. Explore our caregivers' availability and find a time that
-        suits you, all from the convenience of your device.
+        Book appointments seamlessly through our online system, with no need to
+        wait in phone queues. Explore our caregivers' availability and find a
+        time that suits you, all from the convenience of your device.
       </SectionText>
       <AppointmentButton to="/appointments">Book Now</AppointmentButton>
     </AppointmentSection>
@@ -148,9 +149,10 @@ const Home = () => (
     <PrivacySection>
       <SectionTitle>Data Privacy</SectionTitle>
       <SectionText>
-        We value your privacy and are dedicated to safeguarding your personal health
-        information. Our system is built to comply with the highest standards of data
-        protection to ensure your information remains secure and confidential.
+        We value your privacy and are dedicated to safeguarding your personal
+        health information. Our system is built to comply with the highest
+        standards of data protection to ensure your information remains secure
+        and confidential.
       </SectionText>
     </PrivacySection>
 
@@ -160,17 +162,17 @@ const Home = () => (
       <TestimonialList>
         <TestimonialCard>
           <TestimonialText>
-            "Booking an appointment was so easy and convenient. Health Care truly
-            respects my time and needds."
+            "Booking an appointment was so easy and convenient. Health Care
+            truly respects my time and needds."
           </TestimonialText>
-          <TestimonialAuthor>- Alex J.</TestimonialAuthor>
+          <TestimonialAuthor>- Malek G.</TestimonialAuthor>
         </TestimonialCard>
         <TestimonialCard>
           <TestimonialText>
-            "I love the secure online portal. I feel confident that my information
-            is in safe hands."
+            "I love the secure online portal. I feel confident that my
+            information is in safe hands."
           </TestimonialText>
-          <TestimonialAuthor>- Maria K.</TestimonialAuthor>
+          <TestimonialAuthor>- Abou C.</TestimonialAuthor>
         </TestimonialCard>
       </TestimonialList>
     </TestimonialsSection>

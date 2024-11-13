@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import {useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 
 const RegisterContainer = styled.div`
   display: flex;
@@ -135,6 +134,14 @@ function Register() {
           required
         />
         <label>Password: </label>
+        <StyledInput
+          name="password"
+          type="password"
+          value={userDetails.password}
+          onChange={handleInputChange}
+          required
+        />
+        <label>Confirm Password: </label>
         <StyledInput
           name="password"
           type="password"
