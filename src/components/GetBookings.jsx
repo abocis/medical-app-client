@@ -18,6 +18,7 @@ function BookedTimes() {
       return;
     }
 
+    
     const url = `${import.meta.env.VITE_API_URL}/appointments/caregiver/${caregiverId}`;
     console.log("Fetching URL: ", url);
 
