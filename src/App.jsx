@@ -14,6 +14,8 @@ import RequireAuth from "./components/RequireAuth";
 import GlobalStyle from "./styles/GlobalStyle";
 import BookingPage from "./components/BookingPage";
 import "./styles/booking.css";
+import "./styles/bookedtimes.css";
+import GetBookings from "./components/GetBookings";
 
 function App() {
   return (
@@ -40,6 +42,16 @@ function App() {
                 </RequireAuth>
               }
             />
+
+            <Route
+              path="/GetBookings"
+              element={
+                <RequireAuth allowedRoles={["ADMIN"]}>
+                  <GetBookings />
+                </RequireAuth>
+              }
+            />
+
             <Route
               path="/booking"
               element={

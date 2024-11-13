@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";  // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 import styled, { keyframes } from "styled-components";
 import Logout from "./Logout";
+import GetBookings from "./GetBookings";
 
 const AdminContainer = styled.div`
   display: flex;
@@ -32,7 +33,24 @@ const AddButton = styled.button`
   }
 `;
 
-const BookingButton = styled.button`  // Styled component for Booking button
+const TimeButton = styled.button`
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #057d7a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  font-weight: bold;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: #2fadaa;
+  }
+`;
+
+const BookingButton = styled.button`
+  // Styled component for Booking button
   cursor: pointer;
   padding: 10px 20px;
   background-color: #8a2be2;
@@ -111,7 +129,7 @@ const Toast = styled.div`
 `;
 
 function AdminDashboard() {
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
   const {
     authState: { user, userId },
   } = useAuth();
@@ -164,8 +182,13 @@ function AdminDashboard() {
     }
   };
 
-  const handleGoToBooking = () => {  // Define navigation handler
+  const handleGoToBooking = () => {
+    // Define navigation handler
     navigate("/booking");
+  };
+
+  const handleToGetTimes = () => {
+    navigate("/GetBookings");
   };
 
   return (
@@ -174,8 +197,10 @@ function AdminDashboard() {
       <p>Welcome, {user}!</p>
       <Logout />
       <AddButton onClick={openModal}>Add Availability</AddButton>
-      <BookingButton onClick={handleGoToBooking}>Go to Availabilities</BookingButton> {/* New Button */}
-
+      <BookingButton onClick={handleGoToBooking}>
+        Go to Availabilities
+      </BookingButton>{" "}
+      <TimeButton onClick={handleToGetTimes}> Your booked times </TimeButton>
       {isModalOpen && (
         <ModalOverlay>
           <ModalContainer>
@@ -211,14 +236,17 @@ function AdminDashboard() {
               </SlotList>
 
               <FormButton type="submit">Submit Availability</FormButton>
-              <FormButton type="button" onClick={closeModal} style={{ marginLeft: "10px" }}>
+              <FormButton
+                type="button"
+                onClick={closeModal}
+                style={{ marginLeft: "10px" }}
+              >
                 Cancel
               </FormButton>
             </form>
           </ModalContainer>
         </ModalOverlay>
       )}
-
       {toastMessage && <Toast>{toastMessage}</Toast>}
     </AdminContainer>
   );
