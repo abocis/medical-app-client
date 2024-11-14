@@ -13,15 +13,17 @@ const UserContainer = styled.div`
 `;
 
 const LogoContainer = styled.img`
-  height: 20rem;
+  height: 28rem;
 `;
 
 const Title = styled.h2`
   font-size: 22px;
+  display: none;
 `;
 
 const Text = styled.p`
-  font-size: 18px;
+  font-size: 30px;
+  font-weight: bold;
 `;
 
 const Button = styled.button`
@@ -55,7 +57,6 @@ function UserDashboard() {
       <Title>User Dashboard</Title>
       <Text>Welcome, {user}!</Text>
       <Button onClick={handleGoToBooking}>Go to Booking</Button>
-      <Logout />
     </UserContainer>
   );
 }

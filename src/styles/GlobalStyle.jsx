@@ -1,30 +1,21 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-
-  body {
-    margin: 1;
-    padding: 1;
+  * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
-    width: 100vw;
-    height: 100vh;
+    font-family: "Roboto", sans-serif;; 
+    
   }
 
-  .content {
-  margin: 1rem;
+  html, body {
+    height: 100%;
   }
 
-  .link {
-   text-decoration: none;
-    color: inherit;
-    all: unset;
+  #root {
+    height: 100%;
   }
-
-  *, *::before, *::after {
-    box-sizing: inherit;
-  }
-
 `;
 
 export default GlobalStyle;

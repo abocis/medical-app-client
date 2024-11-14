@@ -3,12 +3,14 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import "../styles/Booking.css";
 // login page
 const LoginContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-top: 80px;
 `;
 
 const LoginButton = styled.button`
@@ -33,11 +35,12 @@ const LoginButton = styled.button`
 `;
 
 const Title = styled.h2`
-  font-size: 22px;
+  font-size: 30px;
+  margin-bottom: 20px;
 `;
 
 const FormWrapper = styled.form`
-  padding: 40px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
@@ -113,7 +116,7 @@ function Login() {
 
   return (
     <LoginContainer>
-      <Title>Login</Title>
+      <Title>Health Care</Title>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <FormWrapper onSubmit={handleLogin}>
         <label>Username: </label>

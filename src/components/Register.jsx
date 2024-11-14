@@ -32,9 +32,19 @@ const RegisterButton = styled.button`
 `;
 
 const Title = styled.h2`
-  font-size: 22px;
+  font-size: 36px;
+  color: #333;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  text-align: center;
+  background: linear-gradient(45deg, #057d7a, #8a2be2);
+  -webkit-background-clip: text;
+  color: transparent;
+  padding: 10px 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  line-height: 1.5;
 `;
-
 const FormWrapper = styled.form`
   padding: 40px;
   display: flex;
@@ -44,6 +54,7 @@ const FormWrapper = styled.form`
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   width: 350px;
   gap: 10px;
+  margin-top: 15px;
 `;
 
 const StyledInput = styled.input`

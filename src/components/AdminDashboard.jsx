@@ -11,22 +11,26 @@ const AdminContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 20px;
+  background-image: url("../assets/healthcare.png");
+  min-height: 100vh;
 `;
 
 const Title = styled.h2`
   font-size: 22px;
+  color: #333; /* Dark color for the title */
 `;
 
 const AddButton = styled.button`
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 10px 30px;
   background-color: #057d7a;
   color: white;
   border: none;
   border-radius: 5px;
   margin-top: 20px;
   font-weight: bold;
-  margin-right: 10px;
+  transition: background-color 0.3s ease;
 
   &:hover {
     background-color: #2fadaa;
@@ -35,14 +39,14 @@ const AddButton = styled.button`
 
 const TimeButton = styled.button`
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 10px 30px;
   background-color: #057d7a;
   color: white;
   border: none;
   border-radius: 5px;
   margin-top: 20px;
   font-weight: bold;
-  margin-right: 10px;
+  transition: background-color 0.3s ease;
 
   &:hover {
     background-color: #2fadaa;
@@ -50,18 +54,18 @@ const TimeButton = styled.button`
 `;
 
 const BookingButton = styled.button`
-  // Styled component for Booking button
   cursor: pointer;
-  padding: 10px 20px;
-  background-color: #8a2be2;
+  padding: 10px 30px;
+  background-color: #057d7a;
   color: white;
   border: none;
   border-radius: 5px;
   margin-top: 20px;
   font-weight: bold;
+  transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #9370db;
+    background-color: #2fadaa;
   }
 `;
 
@@ -88,13 +92,15 @@ const ModalContainer = styled.div`
 
 const FormButton = styled.button`
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 10px 30px;
   background-color: #057d7a;
   color: white;
   border: none;
   border-radius: 5px;
   margin-top: 10px;
   font-weight: bold;
+  transition: background-color 0.3s ease;
+
   &:hover {
     background-color: #2fadaa;
   }
@@ -110,10 +116,10 @@ const SlotItem = styled.li`
   font-size: 16px;
 `;
 
-// Toast Notification Animation
 const fadeInOut = keyframes`
-  0%, 100% { opacity: 0; }
-  10%, 90% { opacity: 1; }
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
 `;
 
 const Toast = styled.div`
@@ -183,7 +189,6 @@ function AdminDashboard() {
   };
 
   const handleGoToBooking = () => {
-    // Define navigation handler
     navigate("/booking");
   };
 
@@ -193,9 +198,8 @@ function AdminDashboard() {
 
   return (
     <AdminContainer>
-      <Title>Admin Dashboard</Title>
-      <p>Welcome, {user}!</p>
-      <Logout />
+      <Title>Admin</Title>
+      <p>Welcome Admin, {user}!</p>
       <AddButton onClick={openModal}>Add Availability</AddButton>
       <BookingButton onClick={handleGoToBooking}>
         Go to Availabilities

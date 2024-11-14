@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import "../styles/Booking.css";
 
 // Main container for the Home page
 const HomeContainer = styled.div`
@@ -8,27 +9,24 @@ const HomeContainer = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background-color: #f4f4f9;
+  background-image: url("../assets/healthcare.png");
   color: #333;
   padding: 20px;
   min-height: 100vh;
   width: 100%;
+  justify-content: space-between; /* Fördelar innehåll jämnt */
 `;
 
 // Shared styles
 const Section = styled.section`
   width: 90%;
-  max-width: 1200px;
+  max-width: 600px;
   margin: 40px 0;
   padding: 40px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
-
-  @media (max-width: 768px) {
-    padding: 20px;
-  }
 `;
 
 const SectionTitle = styled.h2`
@@ -43,13 +41,10 @@ const SectionText = styled.p`
   line-height: 1.6;
 `;
 
-// About Us Section
 const AboutSection = styled(Section)``;
 
-// Contact Section
 const ContactSection = styled(Section)``;
 
-// Appointment Booking Section
 const AppointmentSection = styled(Section)``;
 
 const AppointmentButton = styled(Link)`
