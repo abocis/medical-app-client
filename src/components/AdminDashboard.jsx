@@ -205,7 +205,6 @@ function AdminDashboard() {
         Go to Availabilities
       </BookingButton>{" "}
       <TimeButton onClick={handleToGetTimes}> Your booked times </TimeButton>
-      <Logout />
       {isModalOpen && (
         <ModalOverlay>
           <ModalContainer>

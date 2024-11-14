@@ -57,7 +57,6 @@ function UserDashboard() {
       <Title>User Dashboard</Title>
       <Text>Welcome, {user}!</Text>
       <Button onClick={handleGoToBooking}>Go to Booking</Button>
-      <Logout />
     </UserContainer>
   );
 }

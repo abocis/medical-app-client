@@ -14,6 +14,7 @@ const HeaderContainer = styled.header`
   color: #fff;
   margin: 0 auto;
   width: calc(100% - 40px);
+  height: 60px;
 `;
 const LogoContainer = styled(Link)`
   display: flex;
