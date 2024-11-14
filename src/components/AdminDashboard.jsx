@@ -12,7 +12,7 @@ const AdminContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   padding: 20px;
-  background-color: #f9f9f9; /* Light background for the container */
+  background-image: url("../assets/healthcare.png");
   min-height: 100vh;
 `;
 

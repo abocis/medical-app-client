@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import "../styles/Booking.css";
 
 // Main container for the Home page
 const HomeContainer = styled.div`
@@ -8,7 +9,7 @@ const HomeContainer = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background-color: #f4f4f9;
+  background-image: url("../assets/healthcare.png");
   color: #333;
   padding: 20px;
   min-height: 100vh;

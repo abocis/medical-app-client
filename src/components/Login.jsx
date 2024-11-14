@@ -40,7 +40,7 @@ const Title = styled.h2`
 `;
 
 const FormWrapper = styled.form`
-  padding: 40px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;

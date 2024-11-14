@@ -10,10 +10,10 @@ const HeaderContainer = styled.header`
   max-width: 1900px;
   padding: 20px 30px;
   background-color: #333;
-  border-radius: 12px;
+
   color: #fff;
   margin: 0 auto;
-  width: calc(100% - 40px);
+  width: calc(100% -);
   height: 60px;
 `;
 const LogoContainer = styled(Link)`
