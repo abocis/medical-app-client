@@ -43,7 +43,6 @@ const NavLink = styled(Link)`
   text-decoration: none;
   font-size: 18px;
   transition: color 0.3s ease;
-
   &:hover {
     color: #2fadaa;
   }
@@ -68,7 +67,12 @@ const Header = () => {
       <NavLinks>
         <NavLink to="/about">About us</NavLink>
         <NavLink to="/contact">Contact</NavLink>
-        <NavLink to="/login">Login</NavLink>
+
+        {authState?.isAuthenticated ? (
+          <NavLink to={authState.roles.includes("USER") ?  "/user/dashboard" : "/admin/dashboard"}>Profile</NavLink>
+        ) : (
+          <NavLink to="/login">Login</NavLink>
+        )}
         {authState?.isAuthenticated ? (
           <button
             onClick={handleLogout}
@@ -80,6 +84,7 @@ const Header = () => {
               fontSize: "18px",
             }}
           >
+            <br/> 
             Logout
           </button>
         ) : (
