@@ -9,6 +9,7 @@ const LoginContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-top: 80px;
 `;
 
 const LoginButton = styled.button`
@@ -33,7 +34,8 @@ const LoginButton = styled.button`
 `;
 
 const Title = styled.h2`
-  font-size: 22px;
+  font-size: 30px;
+  margin-bottom: 20px;
 `;
 
 const FormWrapper = styled.form`
@@ -113,7 +115,7 @@ function Login() {
 
   return (
     <LoginContainer>
-      <Title>Login</Title>
+      <Title>Health Care</Title>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <FormWrapper onSubmit={handleLogin}>
         <label>Username: </label>

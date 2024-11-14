@@ -1,6 +1,10 @@
 .booking-page {
   padding: 20px;
   background-color: #f8f8f8;
+  min-height: 100vh; /* Säkerställ att sidan täcker hela skärmen */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Se till att innehållet inte ligger för nära toppen */
 }
 
 h1 {

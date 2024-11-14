@@ -13,7 +13,7 @@ const UserContainer = styled.div`
 `;
 
 const LogoContainer = styled.img`
-  height: 20rem;
+  height: 25rem;
 `;
 
 const Title = styled.h2`

@@ -13,22 +13,19 @@ const HomeContainer = styled.div`
   padding: 20px;
   min-height: 100vh;
   width: 100%;
+  justify-content: space-between; /* Fördelar innehåll jämnt */
 `;
 
 // Shared styles
 const Section = styled.section`
   width: 90%;
-  max-width: 1200px;
+  max-width: 600px;
   margin: 40px 0;
   padding: 40px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
-
-  @media (max-width: 768px) {
-    padding: 20px;
-  }
 `;
 
 const SectionTitle = styled.h2`
@@ -43,13 +40,10 @@ const SectionText = styled.p`
   line-height: 1.6;
 `;
 
-// About Us Section
 const AboutSection = styled(Section)``;
 
-// Contact Section
 const ContactSection = styled(Section)``;
 
-// Appointment Booking Section
 const AppointmentSection = styled(Section)``;
 
 const AppointmentButton = styled(Link)`

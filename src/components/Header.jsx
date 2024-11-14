@@ -7,13 +7,14 @@ const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  max-width: 1900px;
   padding: 20px 30px;
   background-color: #333;
   border-radius: 12px;
   color: #fff;
+  margin: 0 auto;
+  width: calc(100% - 40px);
 `;
-
 const LogoContainer = styled(Link)`
   display: flex;
   align-items: center;
@@ -24,11 +25,10 @@ const LogoContainer = styled(Link)`
     color: #fff;
   }
 `;
-
 const LogoImage = styled.img`
-  height: 50px;
-  margin-right: 25px;
-  font-size: 30px;
+  height: 70px;
+  width: auto;
+  margin-right: 10px;
 `;
 
 const NavLinks = styled.nav`
