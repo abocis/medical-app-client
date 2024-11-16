@@ -9,7 +9,7 @@ function BookedTimes() {
   } = useAuth();
 
   // Hårdkodat id
-  const caregiverId = "67277bf847a7116efddefde0";
+ // const caregiverId = "67277bf847a7116efddefde0";
 
   useEffect(() => {
     const fetchAvailabilities = async () => {

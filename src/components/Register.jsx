@@ -152,14 +152,7 @@ function Register() {
           onChange={handleInputChange}
           required
         />
-        <label>Confirm Password: </label>
-        <StyledInput
-          name="password"
-          type="password"
-          value={userDetails.password}
-          onChange={handleInputChange}
-          required
-        />
+        
         <RegisterButton type="submit">Register</RegisterButton>
       </FormWrapper>
     </RegisterContainer>
